@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web nong Bank</title>
+    <link rel="stylesheet" href="main.css">
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+    }
+    #result {
+        margin-top: 20px;
+            font-size: 36px;
+            color: #333;
+            transition: transform 0.2s, opacity 0.2s;
+    }
+    #result.animate {
+        transform: scale(1.2);
+        opacity: 0.5;
+    }
+    
+</style>
+</head>
+<body>
+    <h1>วันนี้กินอะไรดี
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Pattaya&family=Rubik+Wet+Paint&display=swap" rel="stylesheet">
+    </h1>
+    <button onclick="startRandom()">RANDOM</button>
+    <div id="result">เมนูที่สุ่มได้ คือ</div>
+
+    </div>
+
+    <script>
+        const values = ["ข้าวผัดหมู", "กะเพราหมูสับ", "กะเพราหมูกรอบ", "ข้าวไข่เจียว", "ราดหน้าหมู", "ข้าวหมูทอดกระเทียม", "ผัดพริกแกงหมูชิ้น", "ผัดคะน้าหมูกรอบ", "สุกี้แห้งหมู", "สุกี้นำ้หมู", "ผัดมาม่า", "ยำมาม่าทะเล" ];
+
+        let animationInterval; // สำหรับเก็บตัวจับเวลา
+        let isAnimating = false; // ตรวจสอบว่ากำลังเล่นแอนิเมชันอยู่หรือไม่
+
+        // ฟังก์ชันเริ่มต้นการสุ่ม
+        function startRandom() {
+            if (isAnimating) return; // ถ้ากำลังสุ่มอยู่ ให้รอจนจบก่อน
+            isAnimating = true;
+
+            const resultElement = document.getElementById("result");
+
+            // เริ่มแอนิเมชันการสุ่ม
+            let counter = 0;
+            animationInterval = setInterval(() => {
+                const randomIndex = Math.floor(Math.random() * values.length);
+                resultElement.textContent = values[randomIndex];
+
+                // เพิ่มเอฟเฟกต์
+                resultElement.classList.add("animate");
+                setTimeout(() => resultElement.classList.remove("animate"), 150); // ลบเอฟเฟกต์หลัง 150ms
+                counter++;
+
+                if (counter >= 8) {
+                    clearInterval(animationInterval); 
+                    finalizeRandom(); 
+                    
+                }
+            }, 250); // ความเร็วในการเปลี่ยนค่าระหว่างสุ่ม (200ms)
+        }
+
+        // ฟังก์ชันแสดงผลลัพธ์สุดท้าย
+        function finalizeRandom() {
+            const resultElement = document.getElementById("result");
+            const randomIndex = Math.floor(Math.random() * values.length);
+            resultElement.textContent = `เมนูที่สุ่มได้ คือ: ${values[randomIndex]}`;
+            isAnimating = false; // ตั้งค่าสถานะว่าสุ่มเสร็จแล้ว
+        }
+            </script>
+
+</body>
